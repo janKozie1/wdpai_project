@@ -1,0 +1,5 @@
+@use 'variables/variables';
+
+h1 {
+  background :var(--color__action_primary--hover);
+}
