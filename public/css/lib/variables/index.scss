@@ -1,7 +1,9 @@
 @use 'colors';
 @use 'elevations';
+@use 'spacings';
 
 @mixin variables {
-  @include colors.colors;
-  @include elevations.elevations;
+  @include colors.css_colors;
+  @include elevations.css_elevations;
+  @include spacings.css_spacings;
 }
