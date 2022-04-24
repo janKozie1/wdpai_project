@@ -1,0 +1,54 @@
+$button_sizes: (
+  "lg": 14px 18px,
+  "lg--squared": 14px 14px,
+  "md": 12px 16px,
+  "md--squared": 12px 12px,
+  "sm": 8px 12px,
+  "sm--squared": 8px 8px,
+);
+
+@mixin button_size {
+  @each $variant, $sizes in $button_sizes {
+    &--#{$variant} {
+      padding: $sizes;
+    }
+  }
+}
+
+@mixin defaults {
+  border: 0;
+
+  &:focus {
+    outline: 0;
+    box-shadow: var(--elevation__tight_1);
+  }
+}
+
+.button {
+  @include defaults;
+  @include button_size;
+
+  &--filled {
+    @mixin button--filled($color, $cursor) {
+      cursor: $cursor;
+      background-color: $color;
+      border-radius: var(--border__rounded_md);
+    }
+
+    &--primary {
+      @include button--filled(var(--color__action_primary), auto);
+
+      &:hover {
+        @include button--filled(var(--color__action_primary--hover), pointer)
+      }
+
+      &:active {
+        @include button--filled(var(--color__action_primary--active), pointer)
+      }
+
+      &:disabled {
+        @include button--filled(var(--color__action_primary--disabled), not-allowed)
+      }
+    }
+  }
+}
