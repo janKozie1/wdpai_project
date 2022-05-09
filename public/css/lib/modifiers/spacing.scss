@@ -1,5 +1,10 @@
 @use '../variables/spacings' as spacings;
 
+.-mt--auto { margin-top: auto ;}
+.-mr--auto { margin-right: auto ;}
+.-mb--auto { margin-bottom: auto ;}
+.-ml--auto { margin-left: auto ;}
+
 @each $name, $value in spacings.$spacing {
   .-p--#{$name} { padding: $value; }
   .-pt--#{$name} { padding-top: $value; }

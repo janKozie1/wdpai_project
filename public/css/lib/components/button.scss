@@ -23,6 +23,7 @@ $button_variants: (
 
 @mixin defaults {
   border: 0;
+  display: inline-block;
   transition: box-shadow 0.2s;
 
   &:focus {
