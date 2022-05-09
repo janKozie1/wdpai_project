@@ -13,6 +13,10 @@ html {
   font-size: defaults.$root_font_size;
 }
 
+html, body {
+  height: 100vh;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;

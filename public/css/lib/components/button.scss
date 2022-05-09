@@ -7,6 +7,12 @@ $button_sizes: (
   "sm--squared": 8px 8px,
 );
 
+$button_variants: (
+  "primary": "primary",
+  "secondary": "secondary",
+  "neutral": "default",
+);
+
 @mixin button_size {
   @each $variant, $sizes in $button_sizes {
     &--#{$variant} {
@@ -17,6 +23,7 @@ $button_sizes: (
 
 @mixin defaults {
   border: 0;
+  transition: box-shadow 0.2s;
 
   &:focus {
     outline: 0;
@@ -35,19 +42,75 @@ $button_sizes: (
       border-radius: var(--border__rounded_md);
     }
 
-    &--primary {
-      @include button--filled(var(--color__action_primary), auto);
+    @each $variant_name, $variant in $button_variants {
+      &--#{$variant_name} {
+        @include button--filled(var(--color__action_#{$variant}), auto);
 
-      &:hover {
-        @include button--filled(var(--color__action_primary--hover), pointer)
+        &:hover {
+          @include button--filled(var(--color__action_#{$variant}--hover), pointer)
+        }
+
+        &:active {
+          @include button--filled(var(--color__action_#{$variant}--active), pointer)
+        }
+
+        &:disabled {
+          @include button--filled(var(--color__action_#{$variant}--disabled), not-allowed)
+        }
       }
+    }
+  }
 
-      &:active {
-        @include button--filled(var(--color__action_primary--active), pointer)
+  &--ghost {
+    @mixin button--ghost($color, $cursor) {
+      cursor: $cursor;
+      background-color: var(--color__inverted);
+      border-radius: var(--border__rounded_md);
+      border: 2px solid $color;
+    }
+
+    @each $variant_name, $variant in $button_variants {
+      &--#{$variant_name} {
+        @include button--ghost(var(--color__action_#{$variant}), auto);
+
+        &:hover {
+          @include button--ghost(var(--color__action_#{$variant}--hover), pointer)
+        }
+
+        &:active {
+          @include button--ghost(var(--color__action_#{$variant}--active), pointer)
+        }
+
+        &:disabled {
+          @include button--ghost(var(--color__action_#{$variant}--disabled), not-allowed)
+        }
       }
+    }
+  }
 
-      &:disabled {
-        @include button--filled(var(--color__action_primary--disabled), not-allowed)
+  &--borderless {
+    @mixin button--borderless($color, $cursor) {
+      cursor: $cursor;
+      background-color: var(--color__inverted);
+      border-radius: var(--border__rounded_md);
+      border: 1px solid $color;
+    }
+
+    @each $variant_name, $variant in $button_variants {
+      &--#{$variant_name} {
+        @include button--borderless(var(--color__inverted), auto);
+
+        &:hover {
+          @include button--borderless(var(--color__action_#{$variant}--hover), pointer)
+        }
+
+        &:active {
+          @include button--borderless(var(--color__action_#{$variant}--active), pointer)
+        }
+
+        &:disabled {
+          @include button--borderless(var(--color__action_#{$variant}--disabled), not-allowed)
+        }
       }
     }
   }
