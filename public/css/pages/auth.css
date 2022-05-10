@@ -28,8 +28,8 @@
 }
 
 .bg_photo {
-  height: 400px;
-  width: 400px;
+  height: 20vw;
+  width: 20vw;
   position: absolute;
 }
 .bg_photo--top {
