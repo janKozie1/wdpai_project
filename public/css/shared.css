@@ -49,6 +49,9 @@
 .input__input::placeholder {
   color: var(--color__neutral_5);
 }
+.input__input--ghost {
+  border: 0;
+}
 
 .nav {
   height: 100%;
@@ -75,6 +78,7 @@
   align-items: center;
   gap: var(--spacing__700);
   padding: var(--spacing__300) calc(var(--spacing__700) + var(--spacing__300));
+  padding-right: var(--spacing__900);
 }
 .nav__item {
   display: flex;
@@ -93,9 +97,6 @@
 }
 .nav__item--active::before {
   background-color: var(--color__action_primary);
-}
-.nav__item--disabled {
-  cursor: not-allowed;
 }
 
 /*# sourceMappingURL=shared.css.map */

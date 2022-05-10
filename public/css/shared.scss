@@ -59,6 +59,10 @@
     &::placeholder {
       color: var(--color__neutral_5);
     }
+
+    &--ghost {
+      border: 0;
+    }
   }
 }
 
@@ -91,6 +95,7 @@
     align-items: center;
     gap: var(--spacing__700);
     padding: var(--spacing__300) calc(var(--spacing__700) + var(--spacing__300));
+    padding-right: var(--spacing__900);
   }
 
   &__item {
@@ -113,10 +118,6 @@
       &::before {
         background-color: var(--color__action_primary);
       }
-    }
-
-    &--disabled {
-      cursor: not-allowed;
     }
   }
 }
