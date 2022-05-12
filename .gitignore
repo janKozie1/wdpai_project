@@ -1,2 +1,2 @@
-public/css/lib/**/*.css
-public/css/lib/**/*.css.map
+*.css
+*.css.map
