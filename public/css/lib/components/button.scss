@@ -27,6 +27,7 @@ $button_variants: (
   transition: box-shadow 0.2s;
   display: flex;
   align-items: center;
+  height: max-content;
 
   &:focus {
     outline: 0;
