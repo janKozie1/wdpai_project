@@ -33,18 +33,18 @@
         </a>
       </div>
       <?php if($type === 'login'): ?>
-        <form class="form -full-width -mt--1000">
+        <form class="form -full-width -mt--1000" action="/login" method="POST" >
           <div class="form__inputs_container">
             <div class="input -full-width">
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Email</span></div>
-                <input class="input__input -full-width" placeholder="Email..." />
+                <input name="email" class="input__input -full-width" placeholder="Email..." />
               </label>
             </div>
             <div class="input -full-width">
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Password</span></div>
-                <input class="input__input -full-width" placeholder="Password..." />
+                <input name="password" type="password" class="input__input -full-width" placeholder="Password..." />
               </label>
             </div>
           </div>
@@ -53,7 +53,7 @@
               Forgot password?
             </span>
           </a>
-          <button class="button button--md button--filled--primary -mt--1000 -full-width -justify-center">
+          <button type="submit" class="button button--md button--filled--primary -mt--1000 -full-width -justify-center">
             <span class="text__action--button--large">
               <span class="-color--inverted" href="#">
                 Log in
@@ -68,19 +68,19 @@
             <div class="input -full-width">
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Email</span></div>
-                <input class="input__input -full-width" placeholder="Email..." />
+                <input name="email" class="input__input -full-width" placeholder="Email..." />
               </label>
             </div>
             <div class="input -full-width">
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Password</span></div>
-                <input class="input__input -full-width" placeholder="Password..." />
+                <input name="password" type="password" class="input__input -full-width" placeholder="Password..." />
               </label>
             </div>
             <div class="input -full-width">
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Confirm password</span></div>
-                <input class="input__input -full-width" placeholder="Passowrd..." />
+                <input name="repeated_password" type="password" class="input__input -full-width" placeholder="Password..." />
               </label>
             </div>
           </div>
