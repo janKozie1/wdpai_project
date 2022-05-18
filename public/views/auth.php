@@ -39,12 +39,30 @@
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Email</span></div>
                 <input name="email" class="input__input -full-width" placeholder="Email..." />
+                <?php if(isset($messages) && isset($messages['email'])): ?>
+                  <div class="-pl--700 -mt--400 ">
+                    <span class="text__paragraph--small--regular">
+                      <span class="-color--state_error">
+                        <?= $messages['email'] ?>
+                      </span>
+                    </span>
+                  </div>
+                <?php endif; ?>
               </label>
             </div>
             <div class="input -full-width">
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Password</span></div>
                 <input name="password" type="password" class="input__input -full-width" placeholder="Password..." />
+                <?php if(isset($messages) && isset($messages['password'])): ?>
+                  <div class="-pl--700 -mt--400 ">
+                    <span class="text__paragraph--small--regular">
+                      <span class="-color--state_error">
+                        <?= $messages['password'] ?>
+                      </span>
+                    </span>
+                  </div>
+                <?php endif; ?>
               </label>
             </div>
           </div>
@@ -69,18 +87,45 @@
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Email</span></div>
                 <input name="email" class="input__input -full-width" placeholder="Email..." />
+                <?php if(isset($messages) && isset($messages['email'])): ?>
+                  <div class="-pl--700 -mt--400 ">
+                    <span class="text__paragraph--small--regular">
+                      <span class="-color--state_error">
+                        <?= $messages['email'] ?>
+                      </span>
+                    </span>
+                  </div>
+                <?php endif; ?>
               </label>
             </div>
             <div class="input -full-width">
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Password</span></div>
                 <input name="password" type="password" class="input__input -full-width" placeholder="Password..." />
+                <?php if(isset($messages) && isset($messages['password'])): ?>
+                  <div class="-pl--700 -mt--400 ">
+                    <span class="text__paragraph--small--regular">
+                      <span class="-color--state_error">
+                        <?= $messages['password'] ?>
+                      </span>
+                    </span>
+                  </div>
+                <?php endif; ?>
               </label>
             </div>
             <div class="input -full-width">
               <label class="input__label -full-width">
                 <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Confirm password</span></div>
                 <input name="repeated_password" type="password" class="input__input -full-width" placeholder="Password..." />
+                <?php if(isset($messages) && isset($messages['repeated_password'])): ?>
+                  <div class="-pl--700 -mt--400 ">
+                    <span class="text__paragraph--small--regular">
+                      <span class="-color--state_error">
+                        <?= $messages['repeated_password'] ?>
+                      </span>
+                    </span>
+                  </div>
+                <?php endif; ?>
               </label>
             </div>
           </div>

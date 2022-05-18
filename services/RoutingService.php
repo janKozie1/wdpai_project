@@ -20,7 +20,7 @@ class RoutingService {
   }
 
   public function redirect(string $path): void {
-    header("Location {$this->getServerURL()}$path");
+    header("Location: {$this->getServerURL()}$path");
   }
 
   public function redirectToHome(): void {

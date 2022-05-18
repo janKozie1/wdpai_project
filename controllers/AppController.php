@@ -36,7 +36,7 @@ class AppController {
   }
 
   public function renderUnprotected(string $filename, array $variables = []): void {
-    if (!$this->services->getAuthService()->isLoggedIn() && 0 == 1) {
+    if (!$this->services->getAuthService()->isLoggedIn()) {
       $this->render($filename, $variables);
     } else {
       $this->services->getRoutingService()->redirectToHome();

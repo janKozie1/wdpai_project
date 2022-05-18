@@ -18,6 +18,7 @@ Router::get('', 'HomeController');
 Router::get('pantry', 'PantryController');
 Router::get('product', 'ProductController');
 Router::get('register', 'AuthController');
+Router::get('logout', 'AuthController');
 Router::get('login', 'AuthController');
 
 Router::run($path, $services);
