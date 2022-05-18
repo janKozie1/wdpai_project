@@ -1,18 +1,49 @@
 <?php
 
 class AppController {
-  public function render(string $filename = 'index', array $variables = []) {
-    $filepath = 'public/views/'.$filename.'.html';
-    $output = "Page not found";
+  protected ServicesAggregator $services;
 
-    if (file_exists($filepath)) {
-      extract($variables);
+  public function __construct($services){
+    $this->services = $services;
+  }
 
-      ob_start();
-      include $filepath;
-      $output = ob_get_clean();
+  private function getViewFilePath(string $view): string {
+    return "public/views/{$view}.php";
+  }
+
+  private function getView(string $filepath, array $variables): string {
+    extract($variables);
+
+    ob_start();
+    include $filepath;
+    return ob_get_clean();
+  }
+
+  private function render(string $view, array $variables = []): void {
+    $path = $this->getViewFilePath($view);
+
+    print (file_exists($path)
+      ? $this->getView($path, $variables)
+      : $this->getView($this->getViewFilePath('404'), $variables));
+  }
+
+  public function renderProtected(string $filename, array $variables = []): void {
+    if ($this->services->getAuthService()->isLoggedIn()) {
+      $this->render($filename, $variables);
+    } else {
+      $this->services->getRoutingService()->redirectToLogin();
     }
+  }
 
-    print $output;
+  public function renderUnprotected(string $filename, array $variables = []): void {
+    if (!$this->services->getAuthService()->isLoggedIn() && 0 == 1) {
+      $this->render($filename, $variables);
+    } else {
+      $this->services->getRoutingService()->redirectToHome();
+    }
+  }
+
+  public function renderPublic(string $filename, array $variables = []): void {
+    $this->render($filename, $variables);
   }
 }
