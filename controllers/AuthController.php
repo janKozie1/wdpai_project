@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__.'/AppController.php';
+require_once __DIR__.'/../repository/UserRepository.php';
 
 require_once __DIR__.'/../vendor/firebase/php-jwt/src/JWT.php';
 require_once __DIR__.'/../vendor/firebase/php-jwt/src/KEY.php';
@@ -9,6 +10,14 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 class AuthController extends AppController {
+    private UserRepository $userRepository;
+
+    public function __construct($services) {
+      parent::__construct($services);
+
+      $this->userRepository = new UserRepository();
+    }
+
   private function parseLoginRequest($userInput): ?array {
     if (!isset($userInput['email']) && !isset($userInput['password'])) {
       return null;
@@ -20,7 +29,7 @@ class AuthController extends AppController {
     ];
   }
 
-  private function parseSignupRequest($userInput): ?array {
+  private function parseRegisterRequest($userInput): ?array {
     if (!isset($userInput['email']) && !isset($userInput['password']) && !isset($userInput["repeated_password"])) {
       return null;
     }
@@ -33,9 +42,55 @@ class AuthController extends AppController {
   }
 
   private function validateLoginRequest($loginRequest): array {
+    $user = $this->userRepository->getUser($loginRequest['email']);
+
+    if (!$user) {
+      return  [
+        'isValid' => false,
+        'messages' => ['email' => 'User does not exist', 'password' => null],
+      ];
+    }
+
+    if (!$user->checkPassword($loginRequest["password"])) {
+      return [
+        'isValid' => false,
+        'messages' => ['email' => null, 'password' => 'Incorrect password']
+      ];
+    }
+
     return [
-      'isValid' => $loginRequest["password"] === "1234",
-      'messages' => ['email' => 'User does not exist', 'password' => 'Incorrect password']
+      'isValid' => true,
+      'messages' => ['email' => null, 'password' => null]
+    ];
+  }
+
+  private function validateRegisterRequest($registerRequest): array {
+    $existingUser = $this->userRepository->getUser($registerRequest['email']);
+
+    if ($existingUser) {
+      return  [
+        'isValid' => false,
+        'messages' => ['email' => 'Email already taken', 'password' => null, 'repeated_password' => null],
+      ];
+    }
+
+    if (!$this->services->getValidationService()->isEmail($registerRequest["email"])) {
+      return [
+        'isValid' => false,
+        'messages' => ['email' => "Email is not valid", 'password' => null, 'repeated_password' => null],
+      ];
+    }
+
+    if ($registerRequest['password'] !== $registerRequest["repeated_password"]) {
+      return [
+        'isValid' => false,
+        'messages' => ['email' => null, 'password' => null, 'repeated_password' => 'Passwords do not match'],
+      ];
+    }
+
+    return [
+      'isValid' => true,
+      'messages' => ['email' => null, 'password' => null, 'repeated_password' => null],
     ];
   }
 
@@ -65,19 +120,25 @@ class AuthController extends AppController {
   }
 
   public function register() {
-    $key = 'example_key';
-    $payload = [
-      'iss' => 'http://example.org',
-      'aud' => 'http://example.com',
-      'iat' => 1356999524,
-      'nbf' => 1357000000
-    ];
+    $registerRequest = $this->parseRegisterRequest($_POST);
 
+    if (is_null($registerRequest) || $this->services->getAuthService()->isLoggedIn()) {
+      $this->renderUnprotected('auth', ['type' => 'register']);
+    } else {
+      $validationResult = $this->validateRegisterRequest($registerRequest);
 
+      if ($validationResult['isValid']) {
+        $newUser = new User($registerRequest["email"], password_hash($registerRequest["password"],  PASSWORD_BCRYPT ));
+        $this->userRepository->addUser($newUser);
 
-    $jwt = JWT::encode($payload, $key, 'HS256');
-    $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
-
-    $this->renderUnprotected('auth', ['type' => 'register']);
+        $this->services->getAuthService()->logIn($registerRequest["email"]);
+        $this->services->getRoutingService()->redirectToHome();
+      } else {
+        $this->renderUnprotected('auth', [
+          'type' => 'register',
+          'messages' => $validationResult['messages']
+        ]);
+      }
+    }
   }
 }

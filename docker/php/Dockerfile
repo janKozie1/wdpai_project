@@ -1,15 +1,38 @@
-FROM php:8.0-fpm
+FROM php:8.0-fpm-alpine3.14
 
-RUN apt-get update
-RUN apt-get -y --no-install-recommends install git \
-    && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
+ENV RUN_DEPS \
+    zlib \
+    libzip \
+    libpng \
+    libjpeg-turbo \
+    postgresql-libs
 
-RUN apt-get install zip unzip
+ENV BUILD_DEPS \
+    zlib-dev \
+    libzip-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    postgresql-dev
 
-RUN composer require firebase/php-jwt
+ENV PHP_EXTENSIONS \
+    opcache \
+    zip \
+    gd \
+    bcmath \
+    pgsql \
+    pdo_pgsql
 
-COPY . /app/
-VOLUME [ "/app" ]
+RUN apk add --no-cache --virtual .build-deps $BUILD_DEPS \
+    && docker-php-ext-configure gd --with-jpeg \
+    && docker-php-ext-install -j "$(nproc)" $PHP_EXTENSIONS \
+    && apk del .build-deps
+
+RUN apk add --no-cache --virtual .run-deps $RUN_DEPS
+
+# Copy the application code
+COPY . /app
+
+VOLUME ["/app"]
 
 
 

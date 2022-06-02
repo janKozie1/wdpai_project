@@ -24,4 +24,8 @@ class User {
     public function setPassword(string $password) {
         $this->password = $password;
     }
+
+    public function checkPassword(string $pwd): bool {
+      return password_verify($pwd, $this->password);
+    }
 }

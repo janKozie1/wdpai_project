@@ -81,7 +81,7 @@
           </button>
         </form>
       <?php elseif($type === 'register'): ?>
-        <form class="form -full-width -mt--1000">
+        <form class="form -full-width -mt--1000" action="/register" method="POST">
           <div class="form__inputs_container">
             <div class="input -full-width">
               <label class="input__label -full-width">

@@ -5,10 +5,12 @@ require 'Router.php';
 require_once __DIR__.'/services/ServicesAggregator.php';
 require_once __DIR__.'/services/AuthService.php';
 require_once __DIR__.'/services/RoutingService.php';
+require_once __DIR__.'/services/ValidationService.php';
 
 $services = new ServicesAggregator(
   new AuthService("JWT KEY"),
-  new RoutingService("/pantry", "/login")
+  new RoutingService("/pantry", "/login"),
+  new ValidationService()
 );
 
 $path = trim($_SERVER['REQUEST_URI'], '/');
