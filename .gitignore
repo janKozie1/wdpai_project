@@ -2,3 +2,5 @@
 **/*.css.map
 
 config.php
+
+node_modules

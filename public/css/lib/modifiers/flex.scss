@@ -12,3 +12,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+.-direction-column {
+  display: flex;
+  flex-direction: column;
+}
