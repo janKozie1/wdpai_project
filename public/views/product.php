@@ -7,15 +7,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="public/css/lib/index.css" />
-  <link rel="stylesheet" type="text/css" href="public/css/pages/product.css" />
-  <link rel="stylesheet" type="text/css" href="public/css/shared.css" />
+  <link rel="stylesheet" type="text/css" href="/public/css/lib/index.css" />
+  <link rel="stylesheet" type="text/css" href="/public/css/pages/product.css" />
+  <link rel="stylesheet" type="text/css" href="/public/css/shared.css" />
   <title>Pantryy</title>
 </head>
 <body class="page">
   <nav class="nav">
     <div class="nav__content">
-      <img src="public/images/shared/logo.png" class="nav__logo logo--small -pt--600 -pl--600 -mt--500 -ml--500" />
+      <img src="/public/images/shared/logo.png" class="nav__logo logo--small -pt--600 -pl--600 -mt--500 -ml--500" />
       <ul class="nav__items">
         <li class="nav__item nav__item--active">
           <a href="#" class="nav__link text__action--button--medium -full-width">
@@ -66,7 +66,7 @@
     <div class="divider--horizontal -full-width"></div>
     <div class="-pt--900 -px--1000 product">
       <div class="-full-width product__left_column">
-        <img src="public/images/user_content/beetroot.jpg" class="product__image">
+        <img src="/public/images/user_content/beetroot.jpg" class="product__image">
         <button class="button button--sm button--ghost--neutral">
           <div class="-pr--500 -inline-flex"><svg class="-fill--neutral_3" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Content / add"><mask id="mask0_70_7092" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="14" height="15"><g id="Icon Mask"><path id="Round" d="M18 13.2646H13V18.2646C13 18.8146 12.55 19.2646 12 19.2646C11.45 19.2646 11 18.8146 11 18.2646V13.2646H6C5.45 13.2646 5 12.8146 5 12.2646C5 11.7146 5.45 11.2646 6 11.2646H11V6.26465C11 5.71465 11.45 5.26465 12 5.26465C12.55 5.26465 13 5.71465 13 6.26465V11.2646H18C18.55 11.2646 19 11.7146 19 12.2646C19 12.8146 18.55 13.2646 18 13.2646Z" fill="black"/></g></mask><g mask="url(#mask0_70_7092)"><rect id="Color Fill" y="0.264648" width="24" height="24" fill="#858C94"/></g></g></svg></div>
           <span class="text__action--button--small">

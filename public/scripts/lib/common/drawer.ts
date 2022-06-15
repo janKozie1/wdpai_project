@@ -30,6 +30,8 @@ const bindDrawerState = ({
 
     drawer.cancelButton?.addEventListener("click", () => updateState((false)));
     drawer.xButton?.addEventListener("click", () => updateState((false)));
+
+    return updateState;
 }
 
 const getDrawerControlls = (root: Element): Drawer => ({
@@ -38,7 +40,15 @@ const getDrawerControlls = (root: Element): Drawer => ({
     cancelButton: root.querySelector('button[data-drawer-node="cancelButton"]'),
 })
 
-const initDrawer = (name: string, containerNode: HTMLElement = document.body) => {
+type InitDrawerArg = Readonly<{
+    name: string;
+    containerNode?: Element
+}>
+
+const initDrawer = ({
+    name,
+    containerNode = document.body,
+}: InitDrawerArg) => {
     const drawerNode = containerNode.querySelector(`#drawer--${name}`);
     const drawerToggleButton = containerNode.querySelector(`button#drawer_button--${name}`);
 
@@ -46,10 +56,15 @@ const initDrawer = (name: string, containerNode: HTMLElement = document.body) =>
         return;
     }
 
-    bindDrawerState({
+    const setState = bindDrawerState({
         button: drawerToggleButton,
         drawer: getDrawerControlls(drawerNode),
     })
+
+    return {
+        open: () => setState(true),
+        close: () => setState(false),
+    }
 }
 
 export default initDrawer;

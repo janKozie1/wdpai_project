@@ -25,11 +25,20 @@
           <div class="-inline-flex -fill--neutral_3"><svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Content / clear"><mask id="mask0_70_7154" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="14" height="14"><g id="Icon Mask"><path id="Round" d="M18.3 5.97436C18.1131 5.78711 17.8595 5.68187 17.595 5.68187C17.3305 5.68187 17.0768 5.78711 16.89 5.97436L12 10.8544L7.10997 5.96436C6.92314 5.77711 6.66949 5.67188 6.40497 5.67188C6.14045 5.67188 5.8868 5.77711 5.69997 5.96436C5.30997 6.35436 5.30997 6.98436 5.69997 7.37436L10.59 12.2644L5.69997 17.1544C5.30997 17.5444 5.30997 18.1744 5.69997 18.5644C6.08997 18.9544 6.71997 18.9544 7.10997 18.5644L12 13.6744L16.89 18.5644C17.28 18.9544 17.91 18.9544 18.3 18.5644C18.69 18.1744 18.69 17.5444 18.3 17.1544L13.41 12.2644L18.3 7.37436C18.68 6.99436 18.68 6.35436 18.3 5.97436Z" fill="black"/></g></mask><g mask="url(#mask0_70_7154)"><rect id="Color Fill" y="0.264648" width="24" height="24" fill="#858C94"/></g></g></svg></div>
         </button>
       </div>
-      <form>
+      <form id="form--addItem">
         <div class="-mt--1000 -pt--500">
           <label class="input__label -full-width">
             <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Name</span></div>
             <input name="name" class="input__input -bg--inverted -full-width" placeholder="Name..." />
+            <?php if(isset($messages) && isset($messages['name'])): ?>
+              <div class="-pl--700 -mt--400">
+                  <span class="text__paragraph--small--regular">
+                    <span class="-color--state_error">
+                      <?= $messages['name'] ?>
+                    </span>
+                  </span>
+              </div>
+            <?php endif; ?>
           </label>
         </div>
         <div class="-mt--800">
@@ -41,21 +50,21 @@
         <div class="-mt--800">
           <label class="input__label -full-width">
             <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Description</span></div>
-            <textarea name="image" class="input__input -bg--inverted -full-width" placeholder="Description..."></textarea>
+            <textarea name="description" class="input__input -bg--inverted -full-width" placeholder="Description..."></textarea>
           </label>
         </div>
         <div class="-mt--800">
           <div class="-full-width">
             <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Measurment unit</span></div>
             <div class="-align-center -gap--700">
-              <label>
-                <input type="radio" name="unit" class="-mr--200" />
-                <span class="text__paragraph--base--regular">Kilograms</span>
-              </label>
-              <label>
-                <input type="radio" name="unit" class="-mr--200" />
-                <span class="text__paragraph--base--regular">Liters</span>
-              </label>
+              <?php if (isset($units)): ?>
+                <?php foreach ($units as $unit): ?>
+                  <label>
+                    <input type="radio" name="unit" value="<?= $unit->getId() ?>" class="-mr--200" />
+                    <span class="text__paragraph--base--regular"><?= $unit->getName()?></span>
+                  </label>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </div>
           </div>
         </div>

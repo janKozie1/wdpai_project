@@ -42,6 +42,16 @@ class AuthController extends AppController {
   }
 
   private function validateLoginRequest($loginRequest): array {
+    if (empty($loginRequest['email']) || empty($loginRequest['password'])) {
+      return  [
+        'isValid' => false,
+        'messages' => [
+          'email' => empty($loginRequest['email']) ? 'Can\'t be empty' : null,
+          'password' => empty($loginRequest['password']) ? 'Can\'t be empty' : null,
+        ],
+      ];
+    }
+
     $user = $this->userRepository->getUser($loginRequest['email']);
 
     if (!$user) {
@@ -65,6 +75,17 @@ class AuthController extends AppController {
   }
 
   private function validateRegisterRequest($registerRequest): array {
+    if (empty($loginRequest['email']) || empty($loginRequest['password']) || empty($loginRequest['repeated_password'])) {
+      return  [
+        'isValid' => false,
+        'messages' => [
+          'email' => empty($loginRequest['email']) ? 'Can\'t be empty' : null,
+          'password' => empty($loginRequest['password']) ? 'Can\'t be empty' : null,
+          'repeated_password' => empty($loginRequest['repeated_password']) ? 'Can\'t be empty' : null,
+        ],
+      ];
+    }
+
     $existingUser = $this->userRepository->getUser($registerRequest['email']);
 
     if ($existingUser) {
