@@ -52,6 +52,8 @@ const initDrawer = ({
     const drawerNode = containerNode.querySelector(`#drawer--${name}`);
     const drawerToggleButton = containerNode.querySelector(`button#drawer_button--${name}`);
 
+    console.log(drawerNode)
+
     if (isNil(drawerNode) || isNil(drawerToggleButton)) {
         return;
     }

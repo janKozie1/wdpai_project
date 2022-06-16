@@ -21,7 +21,8 @@ class PantryController extends AppController {
     return $this->renderProtected('pantry', [
       "units" => $this->measurementUnitsRepository->getMeasurementUnits(),
       "products" => $this->productRepository->getAllProducts(
-         $this->userRepository->getUser($this->services->getAuthService()->getLoggedInEmail())
+         $this->userRepository->getUser($this->services->getAuthService()->getLoggedInEmail()),
+          $_GET["search"]
       )
     ]);
   }

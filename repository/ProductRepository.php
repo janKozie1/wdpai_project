@@ -52,12 +52,13 @@ class ProductRepository extends Repository {
     $PDO->commit();
   }
 
-  public function getAllProducts(?User $user): array {
+  public function getAllProducts(?User $user, ?string $search = ""): array {
     if (!$user) {
       return [];
     }
 
     $userId = $user->getId();
+    $search = empty($search) ? null : $search;
 
     $stmt = $this->database->connect()->prepare('
         SELECT 
@@ -69,10 +70,12 @@ class ProductRepository extends Repository {
         ON 
             PD.product_detail_id = P.product_detail_id 
         where 
-            P.user_id = :userId
+            P.user_id = :userId AND (PD.product_name ILIKE :search OR :search is NULL)
     ');
 
+    //CONCAT(\'%\', :search, \'%\')
     $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
+    $stmt->bindParam(':search', $search, PDO::PARAM_STR);
     $stmt->execute();
 
     $products = [];
@@ -88,5 +91,44 @@ class ProductRepository extends Repository {
     };
 
     return $products;
+  }
+
+  public function getProduct(?User $user, ?string $id): ?Product {
+    if (!$user || !$id) {
+      return null;
+    }
+
+    $userId = $user->getId();
+
+    $stmt = $this->database->connect()->prepare('
+        SELECT 
+            P.product_id, PD.product_name, PD.product_description, PD.product_image_url, PD.measurment_unit_id
+        FROM 
+            products as P 
+        INNER JOIN 
+            products_details as PD 
+        ON 
+            PD.product_detail_id = P.product_detail_id 
+        where 
+            P.product_id = :product_id AND P.user_id = :userId
+    ');
+
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
+    $stmt->bindParam(':product_id', $id, PDO::PARAM_STR);
+    $stmt->execute();
+
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$product) {
+      return null;
+    }
+
+    return new Product(
+      $product['product_name'],
+      $product['product_description'],
+      $product['product_image_url'],
+      $this->measurementUnitRepository->getMeasurementUnit($product['measurment_unit_id']),
+      $product['product_id'],
+    );
   }
 }

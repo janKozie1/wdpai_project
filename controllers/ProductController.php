@@ -75,11 +75,15 @@ class ProductController extends AppController {
   }
 
 
-  public function product(string $id = null) {
+  public function product(?string $id = null) {
     $createItemRequest = $this->parseCreateItemRequest($_POST, $_FILES);
+    $user = $this->userRepository->getUser($this->services->getAuthService()->getLoggedInEmail());
 
     if (is_null($createItemRequest) || !$this->services->getAuthService()->isLoggedIn()) {
-      return $this->renderProtected('product');
+      return $this->renderProtected('product', [
+        'product' => $this->productRepository->getProduct($user, $id),
+        'units' => $this->measurementUnitsRepository->getMeasurementUnits(),
+      ]);
     } else {
       $validationResult = $this->validateCreateItemRequest($createItemRequest);
 
@@ -88,7 +92,6 @@ class ProductController extends AppController {
         $validationResult['validData']['image'] = $newFileName;
 
 
-        $user = $this->userRepository->getUser($this->services->getAuthService()->getLoggedInEmail());
         $this->productRepository->createNewProduct($user, new Product(
           $validationResult['validData']['name'],
           $validationResult['validData']['description'],

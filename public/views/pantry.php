@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="public/css/pages/pantry.css" />
   <link rel="stylesheet" type="text/css" href="public/css/shared.css" />
 
-  <script src="public/scripts/dist/bundle.js"></script>
+  <script src="/public/scripts/dist/pantry.js"></script>
   <title>Pantryy</title>
 </head>
 <body >
@@ -45,12 +45,30 @@
           <label class="input__label -full-width">
             <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Image</span></div>
             <input name="image" class="input__input -bg--inverted -full-width" type="file" />
+            <?php if(isset($messages) && isset($messages['image'])): ?>
+              <div class="-pl--700 -mt--400">
+                  <span class="text__paragraph--small--regular">
+                    <span class="-color--state_error">
+                      <?= $messages['image'] ?>
+                    </span>
+                  </span>
+              </div>
+            <?php endif; ?>
           </label>
         </div>
         <div class="-mt--800">
           <label class="input__label -full-width">
             <div class="-pl--700 -pb--500"><span class="text__paragraph--base--heavy">Description</span></div>
             <textarea name="description" class="input__input -bg--inverted -full-width" placeholder="Description..."></textarea>
+            <?php if(isset($messages) && isset($messages['description'])): ?>
+              <div class="-pl--700 -mt--400">
+                  <span class="text__paragraph--small--regular">
+                    <span class="-color--state_error">
+                      <?= $messages['description'] ?>
+                    </span>
+                  </span>
+              </div>
+            <?php endif; ?>
           </label>
         </div>
         <div class="-mt--800">
@@ -66,6 +84,15 @@
                 <?php endforeach; ?>
               <?php endif; ?>
             </div>
+            <?php if(isset($messages) && isset($messages['unit'])): ?>
+              <div class="-pl--700 -mt--400">
+                  <span class="text__paragraph--small--regular">
+                    <span class="-color--state_error">
+                      <?= $messages['unit'] ?>
+                    </span>
+                  </span>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
         <div class="-mt--1000 -pt--500">
@@ -93,7 +120,7 @@
         <img src="public/images/shared/logo.png" class="nav__logo logo--small -pt--600 -pl--600 -mt--500 -ml--500" />
         <ul class="nav__items">
           <li class="nav__item nav__item--active">
-            <a href="#" class="nav__link text__action--button--medium -full-width">
+            <a href="/pantry" class="nav__link text__action--button--medium -full-width">
               <svg class="-fill--neutral_black" width="24" height="25" viewBox="0 0 24 25" xmlns="http://www.w3.org/2000/svg"><g id="Action / dashboard"><mask id="mask0_70_4193" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="18" height="19"><g id="Icon Mask"><path id="Round" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.2646H4C3.45 13.2646 3 12.8146 3 12.2646V4.26465C3 3.71465 3.45 3.26465 4 3.26465H10C10.55 3.26465 11 3.71465 11 4.26465V12.2646C11 12.8146 10.55 13.2646 10 13.2646ZM10 21.2646H4C3.45 21.2646 3 20.8146 3 20.2646V16.2646C3 15.7146 3.45 15.2646 4 15.2646H10C10.55 15.2646 11 15.7146 11 16.2646V20.2646C11 20.8146 10.55 21.2646 10 21.2646ZM14 21.2646H20C20.55 21.2646 21 20.8146 21 20.2646V12.2646C21 11.7146 20.55 11.2646 20 11.2646H14C13.45 11.2646 13 11.7146 13 12.2646V20.2646C13 20.8146 13.45 21.2646 14 21.2646ZM13 8.26465V4.26465C13 3.71465 13.45 3.26465 14 3.26465H20C20.55 3.26465 21 3.71465 21 4.26465V8.26465C21 8.81465 20.55 9.26465 20 9.26465H14C13.45 9.26465 13 8.81465 13 8.26465Z" fill="black"/></g></mask><g mask="url(#mask0_70_4193)"><rect id="Color Fill" y="0.264648" width="24" height="24" fill="#858C94"/></g></g></svg>
               <span class="-color--neutral_2">Pantry</span>
             </a>
@@ -130,8 +157,8 @@
     </nav>
     <main class="page__main">
       <div class="toolbar -py--700 -my--400 -px--1000">
-        <form>
-          <input class="input__input input__input--ghost -bg--neutral_8" placeholder="Search..." />
+        <form action="/pantry">
+          <input name="search" class="input__input input__input--ghost -bg--neutral_8" value="<?= $_GET["search"] ?>" placeholder="Search..." />
         </form>
         <button class="button button--sm button--filled--primary" id="drawer_button--addItem">
           <div class="-pr--500 -inline-flex"><svg class="-fill--neutral_white" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Content / add"><mask id="mask0_70_7092" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="14" height="15"><g id="Icon Mask"><path id="Round" d="M18 13.2646H13V18.2646C13 18.8146 12.55 19.2646 12 19.2646C11.45 19.2646 11 18.8146 11 18.2646V13.2646H6C5.45 13.2646 5 12.8146 5 12.2646C5 11.7146 5.45 11.2646 6 11.2646H11V6.26465C11 5.71465 11.45 5.26465 12 5.26465C12.55 5.26465 13 5.71465 13 6.26465V11.2646H18C18.55 11.2646 19 11.7146 19 12.2646C19 12.8146 18.55 13.2646 18 13.2646Z" fill="black"/></g></mask><g mask="url(#mask0_70_7092)"><rect id="Color Fill" y="0.264648" width="24" height="24" fill="#858C94"/></g></g></svg></div>

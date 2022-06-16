@@ -1,7 +1,10 @@
 const path = require('path');
 
 module.exports = {
-    entry: './lib/index.ts',
+    entry: {
+        pantry: ['./lib/pages/pantry.ts'],
+        product: ['./lib/pages/product.ts'],
+    },
     module: {
         rules: [
             {
@@ -15,7 +18,7 @@ module.exports = {
         extensions: ['.ts', '.js'],
     },
     output: {
-        filename: 'bundle.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
     },
 };

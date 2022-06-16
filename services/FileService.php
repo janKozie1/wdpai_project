@@ -3,17 +3,12 @@
 class FileService {
   private string $uploadDirectory;
 
-
   public function __construct(string $uploadDirectory) {
     $this->uploadDirectory = $uploadDirectory;
   }
 
   private function getRandomFileName(): string {
     return uniqid();
-  }
-
-  public function getSavedFilePath(string $fileName) {
-    return $this->uploadDirectory.$fileName;
   }
 
   public function saveUploadedFile(array $file): string {
