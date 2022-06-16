@@ -6,11 +6,13 @@ require_once __DIR__.'/services/ServicesAggregator.php';
 require_once __DIR__.'/services/AuthService.php';
 require_once __DIR__.'/services/RoutingService.php';
 require_once __DIR__.'/services/ValidationService.php';
+require_once __DIR__.'/services/FileService.php';
 
 $services = new ServicesAggregator(
   new AuthService("JWT KEY"),
   new RoutingService("/pantry", "/login"),
-  new ValidationService()
+  new ValidationService(),
+  new FileService('/public/images/uploads/'),
 );
 
 $path = trim($_SERVER['REQUEST_URI'], '/');

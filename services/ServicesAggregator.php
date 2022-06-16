@@ -4,11 +4,18 @@ class ServicesAggregator {
   private AuthService $authService;
   private RoutingService $routingService;
   private ValidationService  $validationService;
+  private FileService $fileService;
 
-  public function __construct(AuthService $authService, RoutingService $routingService, ValidationService $validationService) {
+  public function __construct(
+    AuthService $authService,
+    RoutingService $routingService,
+    ValidationService $validationService,
+    FileService $fileService
+  ) {
     $this->authService = $authService;
     $this->routingService = $routingService;
     $this->validationService = $validationService;
+    $this->fileService = $fileService;
   }
 
   public function getAuthService(): AuthService {
@@ -21,5 +28,9 @@ class ServicesAggregator {
 
   public function getValidationService(): ValidationService {
     return $this->validationService;
+  }
+
+  public function getFileService(): FileService{
+    return $this->fileService;
   }
 }

@@ -1,12 +1,14 @@
 <?php
 
 class User {
-    private $email;
-    private $password;
+    private string $email;
+    private string $password;
+    private string $id;
 
-    public function __construct(string $email, string $password){
+    public function __construct(string $email, string $password, string $id = null) {
         $this->email = $email;
         $this->password = $password;
+        $this->id = $id;
     }
 
     public function getEmail(): string {
@@ -27,5 +29,9 @@ class User {
 
     public function checkPassword(string $pwd): bool {
       return password_verify($pwd, $this->password);
+    }
+
+    public function getId(): string {
+      return $this->id;
     }
 }

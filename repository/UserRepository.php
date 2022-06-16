@@ -3,7 +3,6 @@
 require_once __DIR__.'/Repository.php';
 require_once __DIR__.'/../models/User.php';
 
-
 class UserRepository extends Repository {
 
   public function getUser(string $email): ?User {
@@ -22,6 +21,7 @@ class UserRepository extends Repository {
     return new User(
       $user['user_email'],
       $user['user_password'],
+      $user['user_id'],
     );
   }
 

@@ -1,8 +1,22 @@
 <?php
 
 require_once __DIR__.'/AppController.php';
+require_once __DIR__.'/../repository/MeasurementUnitsRepository.php';
+require_once __DIR__.'/../repository/ProductRepository.php';
+require_once __DIR__.'/../models/Product.php';
 
 class ProductController extends AppController {
+  private MeasurementUnitsRepository $measurementUnitsRepository;
+  private ProductRepository $productRepository;
+  private UserRepository $userRepository;
+
+  public function __construct($services) {
+    parent::__construct($services);
+
+    $this->measurementUnitsRepository = new MeasurementUnitsRepository();
+    $this->productRepository = new ProductRepository();
+    $this->userRepository = new UserRepository();
+  }
 
   private function parseCreateItemRequest($userInput, $userFiles): ?array {
     $someFieldsArePresent = isset($userInput['name'])
@@ -30,6 +44,7 @@ class ProductController extends AppController {
     ) {
       return  [
         'isValid' => false,
+        'validData' => null,
         'messages' => [
           'name' => empty($createItemRequest['name']) ? 'Can\'t be empty' : null,
           'description' => empty($createItemRequest['description']) ? 'Can\'t be empty' : null,
@@ -39,11 +54,10 @@ class ProductController extends AppController {
       ];
     }
 
-
-    var_dump(pathinfo($createItemRequest['image']));
-    if(!is_file($createItemRequest['image'])) {
+    if(!is_array($createItemRequest['image']) || !str_contains($createItemRequest['image']['type'], "image")) {
       return [
         'isValid' => false,
+        'validData' => null,
         'messages' => [
           'name' => null,
           'description' => null,
@@ -54,13 +68,9 @@ class ProductController extends AppController {
     }
 
     return [
-      'isValid' => false,
-      'messages' => [
-        'name' => ":(",
-        'image' => "",
-        'description' => ":(",
-        'unit' => ":(",
-      ]
+      'isValid' => true,
+      'validData' => $createItemRequest,
+      'messages' => []
     ];
   }
 
@@ -68,24 +78,27 @@ class ProductController extends AppController {
   public function product(string $id = null) {
     $createItemRequest = $this->parseCreateItemRequest($_POST, $_FILES);
 
-    if (is_null($createItemRequest)) {
+    if (is_null($createItemRequest) || !$this->services->getAuthService()->isLoggedIn()) {
       return $this->renderProtected('product');
     } else {
       $validationResult = $this->validateCreateItemRequest($createItemRequest);
 
+      if ($validationResult["isValid"]) {
+        $newFileName = $this->services->getFileService()->saveUploadedFile($validationResult['validData']['image']);
+        $validationResult['validData']['image'] = $newFileName;
+
+
+        $user = $this->userRepository->getUser($this->services->getAuthService()->getLoggedInEmail());
+        $this->productRepository->createNewProduct($user, new Product(
+          $validationResult['validData']['name'],
+          $validationResult['validData']['description'],
+          $validationResult['validData']['image'],
+          $this->measurementUnitsRepository->getMeasurementUnit($validationResult['validData']['unit'])
+        ));
+      }
+
       header('Content-Type: application/json; charset=utf-8');
       echo json_encode($validationResult);
     };
-
-    //      if ($validationResult["isValid"]) {
-//        $this->services->getAuthService()->logIn($loginRequest["email"]);
-//        $this->services->getRoutingService()->redirectToHome();
-//      } else {
-//        $this->renderUnprotected('auth', [
-//          'type' => 'login',
-//          'messages' => $validationResult['messages']
-//        ]);
-//      }
-    //   };
   }
 }

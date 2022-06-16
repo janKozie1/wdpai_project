@@ -17,7 +17,7 @@ class AuthService {
     $this->jwtKey = $jwtKey;
   }
 
-  public function isLoggedIn(): bool {
+  public function getLoggedInEmail(): ?string {
     if (!isset($_COOKIE[AuthService::$loginCookieName])) {
       return false;
     }
@@ -28,10 +28,18 @@ class AuthService {
         new Key($this->jwtKey, AuthService::$jwtAlg)
       );
 
-      return isset($cookieValue["email"]) && !empty($cookieValue["email"]);
+      if (isset($cookieValue["email"]) && !empty($cookieValue["email"])) {
+        return $cookieValue['email'];
+      }
+
+      return null;
     } catch (Exception $e) {
-      return false;
+      return null;
     }
+  }
+
+  public function isLoggedIn(): bool {
+    return !!$this->getLoggedInEmail();
   }
 
   public function logIn($email): void {

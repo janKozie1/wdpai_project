@@ -8,7 +8,7 @@ import initToasts from "../common/toasts";
 
 type CreateItemResponse = Readonly<{
     isValid: boolean;
-    data: Nullable<{id: string}>,
+    validData: Nullable<{id: string}>,
     messages: Partial<Readonly<{
         name: string;
         image: string;
@@ -34,9 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     return toastMethods.open("Something went wrong, try again later");
                 }
 
-                if (response.isValid && !isNil(response.data)) {
+                if (response.isValid && !isNil(response.validData)) {
                     drawerMethods.close();
-                    window.location.replace(`/product/${response.data.id}`)
+                    location.reload();
                 } else {
                     setErrors(Object.entries(response.messages).map(([field, error]) => ({
                         error,

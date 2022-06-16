@@ -144,66 +144,22 @@
       </div>
       <div class="divider--horizontal -full-width"></div>
       <ul class="pantry_list -px--700 -py--1000">
-        <li class="pantry_list__item">
-          <img src="public/images/user_content/beetroot.jpg" class="-full-width" />
-          <div class="item_description -pt--300">
-            <div>
-              <h3 class="text__small_caps--regular">beetroot</h3>
-            </div>
-            <p class="text__paragraph--small--light -mt--500">Available:</p>
-            <p class="text__paragraph--base--regular item_description__amount">4 kg / 12pcs.</p>
-          </div>
-        </li>
-        <li class="pantry_list__item">
-          <img src="public/images/user_content/beetroot.jpg" class="-full-width" />
-          <div class="item_description -pt--300">
-            <div>
-              <h3 class="text__small_caps--regular">beetroot</h3>
-            </div>
-            <p class="text__paragraph--small--light -mt--500">Available:</p>
-            <p class="text__paragraph--base--regular item_description__amount">4 kg / 12pcs.</p>
-          </div>
-        </li>
-        <li class="pantry_list__item">
-          <img src="public/images/user_content/beetroot.jpg" class="-full-width" />
-          <div class="item_description -pt--300">
-            <div>
-              <h3 class="text__small_caps--regular">beetroot</h3>
-            </div>
-            <p class="text__paragraph--small--light -mt--500">Available:</p>
-            <p class="text__paragraph--base--regular item_description__amount">4 kg / 12pcs.</p>
-          </div>
-        </li>
-        <li class="pantry_list__item">
-          <img src="public/images/user_content/beetroot.jpg" class="-full-width" />
-          <div class="item_description -pt--300">
-            <div>
-              <h3 class="text__small_caps--regular">beetroot</h3>
-            </div>
-            <p class="text__paragraph--small--light -mt--500">Available:</p>
-            <p class="text__paragraph--base--regular item_description__amount">4 kg / 12pcs.</p>
-          </div>
-        </li>
-        <li class="pantry_list__item">
-          <img src="public/images/user_content/beetroot.jpg" class="-full-width" />
-          <div class="item_description -pt--300">
-            <div>
-              <h3 class="text__small_caps--regular">beetroot</h3>
-            </div>
-            <p class="text__paragraph--small--light -mt--500">Available:</p>
-            <p class="text__paragraph--base--regular item_description__amount">4 kg / 12pcs.</p>
-          </div>
-        </li>
-        <li class="pantry_list__item">
-          <img src="public/images/user_content/beetroot.jpg" class="-full-width" />
-          <div class="item_description -pt--300">
-            <div>
-              <h3 class="text__small_caps--regular">beetroot</h3>
-            </div>
-            <p class="text__paragraph--small--light -mt--500">Available:</p>
-            <p class="text__paragraph--base--regular item_description__amount">4 kg / 12pcs.</p>
-          </div>
-        </li>
+        <?php if (isset($products)): ?>
+          <?php foreach ($products as $product): ?>
+            <li class="pantry_list__item">
+              <a href="/product/<?= $product->getId() ?>" class="item_link">
+                <img src="public/images/uploads/<?= $product->getImage() ?>" class="-full-width" />
+                <div class="item_description -pt--300">
+                  <div>
+                    <h3 class="text__small_caps--regular"><?= $product->getName() ?></h3>
+                  </div>
+                  <p class="text__paragraph--small--light -mt--500">Available:</p>
+                  <p class="text__paragraph--base--regular item_description__amount">4 kg / 12pcs.</p>
+                </div>
+              </a>
+            </li>
+          <?php endforeach; ?>
+        <?php endif; ?>
       </ul>
     </main>
   </div>
