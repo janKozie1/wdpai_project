@@ -45,14 +45,17 @@ type InitDrawerArg = Readonly<{
     containerNode?: Element
 }>
 
+export type InitDrawerReturnValue = Readonly<{
+    open: () => void;
+    close: () => void;
+}>
+
 const initDrawer = ({
     name,
     containerNode = document.body,
-}: InitDrawerArg) => {
+}: InitDrawerArg): InitDrawerReturnValue => {
     const drawerNode = containerNode.querySelector(`#drawer--${name}`);
     const drawerToggleButton = containerNode.querySelector(`button#drawer_button--${name}`);
-
-    console.log(drawerNode)
 
     if (isNil(drawerNode) || isNil(drawerToggleButton)) {
         return;

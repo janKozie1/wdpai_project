@@ -73,7 +73,6 @@ class ProductRepository extends Repository {
             P.user_id = :userId AND (PD.product_name ILIKE :search OR :search is NULL)
     ');
 
-    //CONCAT(\'%\', :search, \'%\')
     $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
     $stmt->bindParam(':search', $search, PDO::PARAM_STR);
     $stmt->execute();
@@ -130,5 +129,44 @@ class ProductRepository extends Repository {
       $this->measurementUnitRepository->getMeasurementUnit($product['measurment_unit_id']),
       $product['product_id'],
     );
+  }
+
+  public function deleteProduct(?User $user, ?string $id): bool {
+    if (!$user || !$id) {
+      return false;
+    }
+
+    $PDO = $this->database->connect();
+
+    $userId = $user->getId();
+    $queryStmt = $PDO->prepare('
+        SELECT 
+            PD.product_detail_id
+        FROM
+            products_details as PD
+        JOIN
+            products as P
+        ON
+            P.product_detail_id = PD.product_detail_id
+        WHERE
+            P.product_id = :product_id AND P.user_id = :userId
+    ');
+
+    $queryStmt->bindParam(':userId', $userId, PDO::PARAM_STR);
+    $queryStmt->bindParam(':product_id', $id, PDO::PARAM_STR);
+    $queryStmt->execute();
+
+    $productDetails = $queryStmt->fetch(PDO::FETCH_ASSOC);
+    $productDetailsId = $productDetails['product_detail_id'];
+
+    if (!$productDetails) {
+      return false;
+    }
+
+    $deleteStmt = $PDO->prepare('DELETE from products_details where product_detail_id = :product_detail_id');
+    $deleteStmt->bindParam(':product_detail_id', $productDetailsId, PDO::PARAM_STR);
+    $deleteStmt->execute();
+
+    return true;
   }
 }

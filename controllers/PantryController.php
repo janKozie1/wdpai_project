@@ -22,7 +22,7 @@ class PantryController extends AppController {
       "units" => $this->measurementUnitsRepository->getMeasurementUnits(),
       "products" => $this->productRepository->getAllProducts(
          $this->userRepository->getUser($this->services->getAuthService()->getLoggedInEmail()),
-          $_GET["search"]
+        $_GET["search"] ?? null
       )
     ]);
   }

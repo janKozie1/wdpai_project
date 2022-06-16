@@ -76,15 +76,21 @@ class ProductController extends AppController {
 
 
   public function product(?string $id = null) {
-    $createItemRequest = $this->parseCreateItemRequest($_POST, $_FILES);
     $user = $this->userRepository->getUser($this->services->getAuthService()->getLoggedInEmail());
+    $method = $_SERVER['REQUEST_METHOD'];
 
-    if (is_null($createItemRequest) || !$this->services->getAuthService()->isLoggedIn()) {
+    if ($method === 'GET') {
       return $this->renderProtected('product', [
         'product' => $this->productRepository->getProduct($user, $id),
         'units' => $this->measurementUnitsRepository->getMeasurementUnits(),
       ]);
-    } else {
+    } else if ($method === 'POST') {
+      $createItemRequest = $this->parseCreateItemRequest($_POST, $_FILES);
+
+      if (is_null($createItemRequest) || !$this->services->getAuthService()->isLoggedIn()) {
+        return;
+      }
+
       $validationResult = $this->validateCreateItemRequest($createItemRequest);
 
       if ($validationResult["isValid"]) {
@@ -102,6 +108,11 @@ class ProductController extends AppController {
 
       header('Content-Type: application/json; charset=utf-8');
       echo json_encode($validationResult);
-    };
+    } else if ($method === 'DELETE') {
+      $didDelete = $this->productRepository->deleteProduct($user, $id);
+      echo json_encode(["ok" => $didDelete]);
+    } else {
+      echo json_encode(["ok" => false]);
+    }
   }
 }
