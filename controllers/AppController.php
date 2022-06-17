@@ -46,4 +46,14 @@ class AppController {
   public function renderPublic(string $filename, array $variables = []): void {
     $this->render($filename, $variables);
   }
+
+  public function sendProtectedJson($data): void {
+    header('Content-Type: application/json; charset=utf-8');
+
+    if ($this->services->getAuthService()->isLoggedIn()) {
+      echo json_encode($data);
+    } else {
+      echo json_encode(["ok" => false]);
+    }
+  }
 }

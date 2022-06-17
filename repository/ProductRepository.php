@@ -52,6 +52,67 @@ class ProductRepository extends Repository {
     $PDO->commit();
   }
 
+  public function updateProduct(?User $user, Product $product) {
+    if (!$user) {
+      return;
+    }
+
+    $productId = $product->getId();
+    $userId = $user->getId();
+
+    if(!$userId || !$productId) {
+      return;
+    }
+
+    $PDO = $this->database->connect();
+
+    $queryStmt = $PDO->prepare('
+        SELECT
+            PD.product_detail_id
+        FROM
+            products_details as PD
+        JOIN
+            products as P
+        ON
+            P.product_detail_id = PD.product_detail_id
+        WHERE
+            P.product_id=:product_id
+        AND
+            P.user_id=:user_id;
+    ');
+
+    $queryStmt->bindParam(':product_id', $productId, PDO::PARAM_STR);
+    $queryStmt->bindParam(':user_id', $userId, PDO::PARAM_STR);
+    $queryStmt->execute();
+
+    $productDetails = $queryStmt->fetch(PDO::FETCH_ASSOC);
+    $productDetailsId = $productDetails['product_detail_id'];
+
+    if (!$productDetails) {
+      return false;
+    }
+
+    $updateStmt = $PDO->prepare('
+        UPDATE 
+            products_details
+        SET
+          product_name=COALESCE(?, product_name),
+          product_description=COALESCE(?, product_description),
+          product_image_url=COALESCE(?, product_image_url),
+          measurment_unit_id=COALESCE(?, measurment_unit_id)
+        WHERE
+            product_detail_id=?
+    ');
+
+    $updateStmt->execute([
+      $product->getName(),
+      $product->getDescription(),
+      $product->getImage(),
+      $product->getMeasurementUnit()->getId(),
+      $productDetailsId,
+    ]);
+  }
+
   public function getAllProducts(?User $user, ?string $search = ""): array {
     if (!$user) {
       return [];
@@ -169,4 +230,6 @@ class ProductRepository extends Repository {
 
     return true;
   }
+
+
 }

@@ -18,21 +18,12 @@ class ProductController extends AppController {
     $this->userRepository = new UserRepository();
   }
 
-  private function parseCreateItemRequest($userInput, $userFiles): ?array {
-    $someFieldsArePresent = isset($userInput['name'])
-      || isset($userFiles['image'])
-      || isset($userInput['description'])
-      || isset($userInput['unit']);
-
-    if (!$someFieldsArePresent) {
-      return null;
-    }
-
+  private function parseRequest($userInput, $userFiles): array {
     return [
-      "name" => $userInput['name'] ?? null,
-      "image" => $userFiles['image'] ?? null,
-      "description" => $userInput['description'] ?? null,
-      "unit" => $userInput['unit'] ?? null,
+      "name" => empty($userInput['name']) ? null : $userInput['name'],
+      "image" => empty($userFiles['image']) || $userFiles['image']['size'] === 0 ? null : $userFiles['image'],
+      "description" => empty($userInput['description']) ? null : $userInput['description'],
+      "unit" => empty($userInput['unit']) ? null : $userInput['unit'],
     ];
   }
 
@@ -74,45 +65,75 @@ class ProductController extends AppController {
     ];
   }
 
+  private function validateEditItemRequest($editItemRequest): array {
+    if(is_array($editItemRequest['image']) && !str_contains($editItemRequest['image']['type'], "image")) {
+      return [
+        'isValid' => false,
+        'validData' => null,
+        'messages' => [
+          'name' => null,
+          'description' => null,
+          'unit' => null,
+          'image' => "Must be a valid image"
+        ],
+      ];
+    }
+
+    return [
+      'isValid' => true,
+      'validData' => $editItemRequest,
+      'messages' => []
+    ];
+  }
+
+  private function handleItemRequest(?User $user, array $validationResult, ?string $id, bool $editing) {
+    if ($validationResult["isValid"]) {
+      if ($validationResult['validData']['image']){
+        $newFileName = $this->services->getFileService()->saveUploadedFile($validationResult['validData']['image']);
+        $validationResult['validData']['image'] = $newFileName;
+      }
+
+      $product = $id ? $this->productRepository->getProduct($user, $id) : new Product(
+        $validationResult['validData']['name'],
+        $validationResult['validData']['description'],
+        $validationResult['validData']['image'],
+        $this->measurementUnitsRepository->getMeasurementUnit($validationResult['validData']['unit']),
+      );
+
+      if ($editing) {
+        $validationResult['validData']['name'] && $product->setName($validationResult['validData']['name']);
+        $validationResult['validData']['description'] && $product->setDescription($validationResult['validData']['description']);
+        $validationResult['validData']['image'] && $product->setImage($validationResult['validData']['image']);
+        $validationResult['validData']['unit'] && $product->setMeasurementUnit($this->measurementUnitsRepository->getMeasurementUnit($validationResult['validData']['unit']));
+
+        $this->productRepository->updateProduct($user, $product);
+      } else {
+        $this->productRepository->createNewProduct($user, $product);
+      }
+    }
+
+    $this->sendProtectedJson($validationResult);
+  }
+
 
   public function product(?string $id = null) {
     $user = $this->userRepository->getUser($this->services->getAuthService()->getLoggedInEmail());
     $method = $_SERVER['REQUEST_METHOD'];
 
     if ($method === 'GET') {
-      return $this->renderProtected('product', [
+      $this->renderProtected('product', [
         'product' => $this->productRepository->getProduct($user, $id),
         'units' => $this->measurementUnitsRepository->getMeasurementUnits(),
       ]);
-    } else if ($method === 'POST') {
-      $createItemRequest = $this->parseCreateItemRequest($_POST, $_FILES);
-
-      if (is_null($createItemRequest) || !$this->services->getAuthService()->isLoggedIn()) {
-        return;
-      }
-
-      $validationResult = $this->validateCreateItemRequest($createItemRequest);
-
-      if ($validationResult["isValid"]) {
-        $newFileName = $this->services->getFileService()->saveUploadedFile($validationResult['validData']['image']);
-        $validationResult['validData']['image'] = $newFileName;
-
-
-        $this->productRepository->createNewProduct($user, new Product(
-          $validationResult['validData']['name'],
-          $validationResult['validData']['description'],
-          $validationResult['validData']['image'],
-          $this->measurementUnitsRepository->getMeasurementUnit($validationResult['validData']['unit'])
-        ));
-      }
-
-      header('Content-Type: application/json; charset=utf-8');
-      echo json_encode($validationResult);
+    } else if ($method === 'POST' && !$id) {
+      $this->handleItemRequest($user, $this->validateCreateItemRequest($this->parseRequest($_POST, $_FILES)), $id, false);
+    } else if ($method === 'POST' && $id) {
+      $this->handleItemRequest($user, $this->validateEditItemRequest($this->parseRequest($_POST, $_FILES)), $id, true);
     } else if ($method === 'DELETE') {
       $didDelete = $this->productRepository->deleteProduct($user, $id);
-      echo json_encode(["ok" => $didDelete]);
-    } else {
-      echo json_encode(["ok" => false]);
+      $this->sendProtectedJson(["ok" => $didDelete]);
+    }  else {
+      $this->sendProtectedJson(["ok" => false]);
     }
   }
 }
