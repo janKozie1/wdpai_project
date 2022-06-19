@@ -1,3 +1,5 @@
+@use '../mixins/screen' as screen;
+
 .drawer {
   position: absolute;
   z-index: 2;
@@ -5,7 +7,7 @@
   height: calc(100vh - calc(2 * var(--spacing__800)));
   top: var(--spacing__800);
   background-color: var(--color__neutral_8);
-  width: 330px;
+  width:33.0rem;
   border-radius: var(--border__rounded_md);
   box-shadow: var(--shadow__large);
   padding: var(--spacing__800);
@@ -15,5 +17,15 @@
 
   &--expanded {
     transform: translateX(0);
+  }
+
+  @include screen.mobile {
+    right: unset;
+    left: 50%;
+    transform: translate(150%);
+
+    &--expanded {
+      transform: translate(-50%);
+    }
   }
 }

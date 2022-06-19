@@ -1,3 +1,5 @@
+@use '../lib/mixins/screen' as screen;
+
 .page {
   display: flex;
   flex-direction: column;
@@ -25,6 +27,8 @@
   z-index: -1;
   height: 100%;
   width: 100%;
+
+
 }
 
 .bg_photo {
@@ -37,15 +41,32 @@
     left: 0;
     transform: rotate(45deg) translateX(100px);
     transform-origin: center center;
+
+    @include screen.mobile {
+      height: 20rem;
+      width: 20rem;
+      bottom: -4rem;
+      top: unset;
+      left: 50%;
+      transform: rotate(45deg) translateX(calc(-50% - 4rem));
+    }
   }
 
   &--left {
     left: 0;
     bottom: 0;
+
+    @include screen.mobile {
+      display: none;
+    }
   }
 
   &--right {
     right: 0;
     bottom: 0;
+
+    @include screen.mobile {
+      display: none;
+    }
   }
 }

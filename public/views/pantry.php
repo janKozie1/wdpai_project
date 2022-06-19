@@ -158,9 +158,9 @@
     <main class="page__main">
       <div class="toolbar -py--700 -my--400 -px--1000">
         <form action="/pantry">
-          <input name="search" class="input__input input__input--ghost -bg--neutral_8" value="<?= $_GET["search"] ?? '' ?>" placeholder="Search..." />
+          <input name="search" class="toolbar__input input__input input__input--ghost -bg--neutral_8" value="<?= $_GET["search"] ?? '' ?>" placeholder="Search..." />
         </form>
-        <button class="button button--sm button--filled--primary" id="drawer_button--addItem">
+        <button class="toolbar__button button button--sm button--filled--primary" id="drawer_button--addItem">
           <div class="-pr--500 -inline-flex"><svg class="-fill--neutral_white" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Content / add"><mask id="mask0_70_7092" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="14" height="15"><g id="Icon Mask"><path id="Round" d="M18 13.2646H13V18.2646C13 18.8146 12.55 19.2646 12 19.2646C11.45 19.2646 11 18.8146 11 18.2646V13.2646H6C5.45 13.2646 5 12.8146 5 12.2646C5 11.7146 5.45 11.2646 6 11.2646H11V6.26465C11 5.71465 11.45 5.26465 12 5.26465C12.55 5.26465 13 5.71465 13 6.26465V11.2646H18C18.55 11.2646 19 11.7146 19 12.2646C19 12.8146 18.55 13.2646 18 13.2646Z" fill="black"/></g></mask><g mask="url(#mask0_70_7092)"><rect id="Color Fill" y="0.264648" width="24" height="24" fill="#858C94"/></g></g></svg></div>
           <span class="text__action--button--small">
             <span class="-color--inverted" href="#">

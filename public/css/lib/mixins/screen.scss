@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use '../variables/screens' as screens;
+
+@mixin mobile {
+  @media (max-width: map.get(screens.$screens, 'mobile')) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: map.get(screens.$screens, 'tablet')) {
+    @content;
+  }
+}

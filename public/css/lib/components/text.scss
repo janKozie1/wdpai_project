@@ -1,4 +1,10 @@
 @use "sass:list";
+@use '../mixins/screen' as screen;
+
+@mixin font($size, $line) {
+  font-size: $size;
+  line-height: $line;
+}
 
 @mixin generate_text_variant_for_weights($weights) {
   $weight_variants: heavy, regular, light;
@@ -14,8 +20,7 @@
   $size_variants: large, medium, small;
   @for $index from 1 through list.length($size_variants) {
     &--#{list.nth($size_variants, $index)} {
-      font-size: #{list.nth(list.nth($sizes, $index), 1)};
-      line-height: #{list.nth(list.nth($sizes, $index), 2)};
+      @include font(list.nth(list.nth($sizes, $index), 1), list.nth(list.nth($sizes, $index), 2));
       @content;
     }
   }
@@ -27,8 +32,15 @@
       @include generate_text_variant_for_weights(700 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 6.9rem;
-        line-height: 7.6rem;
+        @include font(6.9rem, 7.6);
+
+        @include screen.tablet {
+          @include font(5.1rem, 5.6rem);
+        }
+
+        @include screen.mobile {
+          @include font(4.1rem, 4.8rem);
+        }
       }
     }
 
@@ -36,8 +48,15 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 5.7rem;
-        line-height: 6.4rem;
+        @include font(5.7rem, 6.4rem);
+
+        @include screen.tablet {
+          @include font(4.4rem, 4.8rem);
+        }
+
+        @include screen.mobile {
+          @include font(3.6rem, 4.0rem);
+        }
       }
     }
   }
@@ -47,8 +66,15 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 4.8rem;
-        line-height: 5.2rem;
+        @include font(4.8rem, 5.2rem);
+
+        @include screen.tablet {
+          @include font(3.8rem, 4.4rem);
+        }
+
+        @include screen.mobile {
+          @include font(3.2rem, 3.6rem);
+        }
       }
     }
 
@@ -56,8 +82,15 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 4.0rem;
-        line-height: 4.4rem;
+        @include font(4.0rem, 4.4rem);
+
+        @include screen.tablet {
+          @include font(3.3rem, 3.6rem);
+        }
+
+        @include screen.mobile {
+          @include font(2.9rem, 3.2rem);
+        }
       }
     }
 
@@ -65,8 +98,15 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 3.3rem;
-        line-height: 3.6rem;
+        @include font(3.3rem, 3.6rem);
+
+        @include screen.tablet {
+          @include font(2.8rem, 3.2rem);
+        }
+
+        @include screen.mobile {
+          @include font(2.6rem, 3.2rem);
+        }
       }
     }
 
@@ -74,8 +114,15 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 2.8rem;
-        line-height: 3.2rem;
+        @include font(2.8rem, 3.2rem);
+
+        @include screen.tablet {
+          @include font(2.4rem, 2.8rem);
+        }
+
+        @include screen.mobile {
+          @include font(2.3rem, 2.4rem);
+        }
       }
     }
 
@@ -83,8 +130,15 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 2.3rem;
-        line-height: 2.4rem;
+        @include font(2.3rem, 2.4rem);
+
+        @include screen.tablet {
+          @include font(2.1rem, 2.4rem);
+        }
+
+        @include screen.mobile {
+          @include font(2.0rem, 2.4rem);
+        }
       }
     }
 
@@ -92,8 +146,15 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 1.9rem;
-        line-height: 2rem;
+        @include font(1.9rem, 2rem);
+
+        @include screen.tablet {
+          @include font(1.8rem, 2.0rem);
+        }
+
+        @include screen.mobile {
+          @include font(1.8rem, 2.0rem);
+        }
       }
     }
   }
@@ -103,8 +164,15 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 2.3rem;
-        line-height: 3.6rem;
+        @include font(2.3rem, 3.6rem);
+
+        @include screen.tablet {
+          @include font(2.1rem, 3.2rem);
+        }
+
+        @include screen.mobile {
+          @include font(2.0rem, 2.8rem);
+        }
       }
     }
 
@@ -112,8 +180,7 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 1.6rem;
-        line-height: 2.4rem;
+        @include font(1.6rem, 2.4rem);
       }
     }
 
@@ -121,8 +188,7 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 1.3rem;
-        line-height: 2rem;
+        @include font(1.3rem, 2rem);
       }
     }
 
@@ -130,8 +196,7 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 1.1rem;
-        line-height: 1.6rem;
+        @include font(1.1rem, 1.6rem);
       }
     }
 
@@ -139,8 +204,7 @@
       @include generate_text_variant_for_weights(600 400 300) {
         color: var(--color__neutral_black);
 
-        font-size: 0.9rem;
-        line-height: 1.2rem;
+        @include font(0.9rem, 1.2rem);
       }
     }
   }
@@ -149,8 +213,7 @@
     @include generate_text_variant_for_weights(600 400 300) {
       color: var(--color__neutral_black);
 
-      font-size: 1.4rem;
-      line-height: 2rem;
+      @include font(1.4rem, 2rem);
 
       text-transform: uppercase;
       font-variant: small-caps;

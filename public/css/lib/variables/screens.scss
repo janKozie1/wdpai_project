@@ -1,0 +1,10 @@
+$screens: (
+  'mobile': 576px,
+  'tablet': 1200px
+);
+
+@mixin css_screens {
+  @each $name, $value in $screens {
+    --screen__#{$name}: #{$value};
+  }
+}

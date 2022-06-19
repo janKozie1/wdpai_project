@@ -9,13 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="public/css/lib/index.css" />
   <link rel="stylesheet" type="text/css" href="public/css/pages/home.css" />
+  <link rel="stylesheet" type="text/css" href="public/css/shared.css" />
   <title>Pantryy | Home</title>
 </head>
 <body>
   <div class="page">
     <header class="header">
       <img src="public/images/shared/logo_full.png" class="logo--big"/>
-      <div class="-mr--900 -align-center">
+      <div class=" -align-center header__buttons">
         <a href="/register" class="button button--lg button--filled--primary -mx--900">
           <span class="text__action--button--large">
             <span class="-color--inverted">
@@ -33,7 +34,7 @@
       </div>
     </header>
     <main class="hero_container">
-      <h1 class="text__heading--1--light">
+      <h1 class="text__heading--1--light -text__align-center">
         Manage your pantry with ease
       </h1>
       <img src="public/images/home/tomato.jpg" class="hero_image" />

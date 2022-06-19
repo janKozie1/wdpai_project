@@ -1,0 +1,32 @@
+@use '../mixins/screen' as screen;
+
+$mobile_sizes: (
+  'nav': 6.5rem,
+);
+
+$tablet_sizes: (
+  'nav': 15rem,
+);
+
+$desktop_sizes: (
+  'nav': 15rem,
+);
+
+
+@mixin css_sizes {
+  @each $name, $value in $desktop_sizes {
+    --sizes__#{$name}: #{$value};
+  }
+
+  @include screen.tablet {
+    @each $name, $value in $tablet_sizes {
+      --sizes__#{$name}: #{$value};
+    }
+  }
+
+  @include screen.mobile {
+    @each $name, $value in $mobile_sizes {
+      --sizes__#{$name}: #{$value};
+    }
+  }
+}

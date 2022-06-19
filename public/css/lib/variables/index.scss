@@ -3,6 +3,8 @@
 @use 'spacings';
 @use 'borders';
 @use 'shadows';
+@use 'screens';
+@use 'sizes';
 
 @mixin variables {
   @include colors.css_colors;
@@ -10,4 +12,6 @@
   @include spacings.css_spacings;
   @include borders.css_borders;
   @include shadows.css_shadows;
+  @include screens.css_screens;
+  @include sizes.css_sizes;
 }

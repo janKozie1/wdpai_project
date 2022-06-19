@@ -166,7 +166,7 @@
     <main class="page__main">
       <div class="toolbar -py--700 -my--400 -px--1000">
         <form action="/pantry">
-          <input name="search" class="input__input input__input--ghost -bg--neutral_8" value="<?= $_GET["search"] ?? '' ?>" placeholder="Search..." />
+          <input name="search" class="toolbar__input input__input input__input--ghost -bg--neutral_8" value="<?= $_GET["search"] ?? '' ?>" placeholder="Search..." />
         </form>
         <div class="-align-center -gap--500">
           <button class="button button--sm--squared button--borderless--neutral" id="button--delete">
@@ -182,14 +182,16 @@
         <div class="-pt--900 -px--1000 product">
           <div class="-full-width product__left_column">
             <img src="/public/images/uploads/<?= $product->getImage() ?>" class="product__image">
-            <button class="button button--sm button--ghost--neutral">
-              <div class="-pr--500 -inline-flex"><svg class="-fill--neutral_3" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Content / add"><mask id="mask0_70_7092" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="14" height="15"><g id="Icon Mask"><path id="Round" d="M18 13.2646H13V18.2646C13 18.8146 12.55 19.2646 12 19.2646C11.45 19.2646 11 18.8146 11 18.2646V13.2646H6C5.45 13.2646 5 12.8146 5 12.2646C5 11.7146 5.45 11.2646 6 11.2646H11V6.26465C11 5.71465 11.45 5.26465 12 5.26465C12.55 5.26465 13 5.71465 13 6.26465V11.2646H18C18.55 11.2646 19 11.7146 19 12.2646C19 12.8146 18.55 13.2646 18 13.2646Z" fill="black"/></g></mask><g mask="url(#mask0_70_7092)"><rect id="Color Fill" y="0.264648" width="24" height="24" fill="#858C94"/></g></g></svg></div>
-              <span class="text__action--button--small">
-              <span class="-color--neutral_3" href="#">
-                Add to a shopping list
+            <div class="-mobile-none">
+              <button class="button button--sm button--ghost--neutral">
+                <div class="-pr--500 -inline-flex"><svg class="-fill--neutral_3" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Content / add"><mask id="mask0_70_7092" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="14" height="15"><g id="Icon Mask"><path id="Round" d="M18 13.2646H13V18.2646C13 18.8146 12.55 19.2646 12 19.2646C11.45 19.2646 11 18.8146 11 18.2646V13.2646H6C5.45 13.2646 5 12.8146 5 12.2646C5 11.7146 5.45 11.2646 6 11.2646H11V6.26465C11 5.71465 11.45 5.26465 12 5.26465C12.55 5.26465 13 5.71465 13 6.26465V11.2646H18C18.55 11.2646 19 11.7146 19 12.2646C19 12.8146 18.55 13.2646 18 13.2646Z" fill="black"/></g></mask><g mask="url(#mask0_70_7092)"><rect id="Color Fill" y="0.264648" width="24" height="24" fill="#858C94"/></g></g></svg></div>
+                <span class="text__action--button--small">
+                <span class="-color--neutral_3" href="#">
+                  Add to a shopping list
+                </span>
               </span>
-            </span>
-            </button>
+              </button>
+            </div>
           </div>
           <div class="-full-width product__right_column">
             <div class="-full-width product__info">
@@ -200,14 +202,16 @@
                   <p class="text__paragraph--base--regular item_description__amount">4 kg / 12pcs.</p>
                 </div>
               </div>
-              <button class="button button--sm button--ghost--primary">
-              <span class="text__action--button--small">
-                <span class="-color--action_primary" href="#">
-                  See recipes
-                </span>
-              </span>
-                <div class="-pl--500 -inline-flex"><svg class="-fill--action_primary" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Navigation / arrow forward"><mask id="mask0_70_10339" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="4" width="16" height="16"><g id="Icon Mask"><path id="Round" d="M5.20874 13.2644H16.3787L11.4987 18.1444C11.1087 18.5344 11.1087 19.1744 11.4987 19.5644C11.8887 19.9544 12.5187 19.9544 12.9087 19.5644L19.4987 12.9744C19.8887 12.5844 19.8887 11.9544 19.4987 11.5644L12.9187 4.96436C12.7319 4.77711 12.4783 4.67188 12.2137 4.67188C11.9492 4.67188 11.6956 4.77711 11.5087 4.96436C11.1187 5.35436 11.1187 5.98436 11.5087 6.37436L16.3787 11.2644H5.20874C4.65874 11.2644 4.20874 11.7144 4.20874 12.2644C4.20874 12.8144 4.65874 13.2644 5.20874 13.2644Z" fill="black"/></g></mask><g mask="url(#mask0_70_10339)"><rect id="Color Fill" y="0.264648" width="24" height="24" fill="#858C94"/></g></g></svg></div>
-              </button>
+              <div class="-mobile-none">
+                <button class="button button--sm button--ghost--primary">
+                  <span class="text__action--button--small">
+                    <span class="-color--action_primary" href="#">
+                      See recipes
+                    </span>
+                  </span>
+                  <div class="-pl--500 -inline-flex"><svg class="-fill--action_primary" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Navigation / arrow forward"><mask id="mask0_70_10339" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="4" width="16" height="16"><g id="Icon Mask"><path id="Round" d="M5.20874 13.2644H16.3787L11.4987 18.1444C11.1087 18.5344 11.1087 19.1744 11.4987 19.5644C11.8887 19.9544 12.5187 19.9544 12.9087 19.5644L19.4987 12.9744C19.8887 12.5844 19.8887 11.9544 19.4987 11.5644L12.9187 4.96436C12.7319 4.77711 12.4783 4.67188 12.2137 4.67188C11.9492 4.67188 11.6956 4.77711 11.5087 4.96436C11.1187 5.35436 11.1187 5.98436 11.5087 6.37436L16.3787 11.2644H5.20874C4.65874 11.2644 4.20874 11.7144 4.20874 12.2644C4.20874 12.8144 4.65874 13.2644 5.20874 13.2644Z" fill="black"/></g></mask><g mask="url(#mask0_70_10339)"><rect id="Color Fill" y="0.264648" width="24" height="24" fill="#858C94"/></g></g></svg></div>
+                </button>
+              </div>
             </div>
             <div class="-mt--900">
               <span class="text__paragraph--base--light">
@@ -222,24 +226,27 @@
                   </div>
                 </button>
               </div>
-              <table class="-mt--500 table">
-                <thead>
-                <tr>
-                  <th class="text__paragraph--base--regular">Date</th>
-                  <th class="text__paragraph--base--regular">Amount bought</th>
-                  <th class="text__paragraph--base--regular">Amount used</th>
-                  <th class="text__paragraph--base--regular">Spoils in</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td class="text__paragraph--base--light">2022.04.01</td>
-                  <td class="text__paragraph--base--light">0.5 kg / 1pc.</td>
-                  <td class="text__paragraph--base--light">0 kg</td>
-                  <td class="text__paragraph--base--light">1 day</td>
-                </tr>
-                </tbody>
-              </table>
+              <div class="table">
+                <table class="-mt--500 table__table">
+                  <thead>
+                  <tr>
+                    <th class="text__paragraph--base--regular">Date</th>
+                    <th class="text__paragraph--base--regular">Amount bought</th>
+                    <th class="text__paragraph--base--regular">Amount used</th>
+                    <th class="text__paragraph--base--regular">Spoils in</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td class="text__paragraph--base--light">2022.04.01</td>
+                    <td class="text__paragraph--base--light">0.5 kg / 1pc.</td>
+                    <td class="text__paragraph--base--light">0 kg</td>
+                    <td class="text__paragraph--base--light">1 day</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+
             </div>
           </div>
         </div>

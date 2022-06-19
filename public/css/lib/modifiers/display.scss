@@ -1,7 +1,21 @@
+@use '../mixins/screen' as screen;
+
 .-inline-flex {
   display: inline-flex;
 }
 
 .-none {
   display: none;
+}
+
+.-mobile-none {
+  @include screen.mobile {
+    display: none;
+  }
+}
+
+.-tablet-none {
+  @include screen.tablet {
+    display: none;
+  }
 }

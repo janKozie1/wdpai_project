@@ -1,3 +1,5 @@
+@use '../lib/mixins/screen' as screen;
+
 .page {
   width: 100%;
   height: 100%;
@@ -22,6 +24,15 @@
   grid-auto-rows: 28rem;
   gap: var(--spacing__900);
   list-style-type: none;
+
+  @include screen.tablet {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+
+  @include screen.mobile {
+    padding-top: var(--spacing__700);
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
 }
 
 .pantry_list__item {
@@ -40,6 +51,7 @@
     object-fit: cover;
     object-position: center center;
     overflow: hidden;
+    border-radius: var(--border__rounded_md);
   }
 
   &::before {
