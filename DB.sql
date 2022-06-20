@@ -433,8 +433,22 @@ ALTER TABLE ONLY public.users_permissions
 ALTER TABLE ONLY public.users_permissions
     ADD CONSTRAINT users_permissions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
+create view users_products
+            (user_id, product_id, product_detail_id, product_name, product_description, product_image_url,
+             measurment_unit_id) as
+SELECT u.user_id,
+       p.product_id,
+       p.product_detail_id,
+       pd.product_name,
+       pd.product_description,
+       pd.product_image_url,
+       pd.measurment_unit_id
+FROM users u
+         JOIN products p ON u.user_id = p.user_id
+         JOIN products_details pd ON p.product_detail_id = pd.product_detail_id;
+
+alter table users_products;
 
 --
 -- PostgreSQL database dump complete
 --
-

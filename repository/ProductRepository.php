@@ -123,15 +123,11 @@ class ProductRepository extends Repository {
 
     $stmt = $this->database->connect()->prepare('
         SELECT 
-            P.product_id, PD.product_name, PD.product_description, PD.product_image_url, PD.measurment_unit_id
+            product_id, product_name, product_description, product_image_url, measurment_unit_id
         FROM 
-            products as P 
-        INNER JOIN 
-            products_details as PD 
-        ON 
-            PD.product_detail_id = P.product_detail_id 
+            users_products
         where 
-            P.user_id = :userId AND (PD.product_name ILIKE :search OR :search is NULL)
+            user_id = :userId AND (product_name ILIKE :search OR :search is NULL)
     ');
 
     $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
@@ -162,15 +158,11 @@ class ProductRepository extends Repository {
 
     $stmt = $this->database->connect()->prepare('
         SELECT 
-            P.product_id, PD.product_name, PD.product_description, PD.product_image_url, PD.measurment_unit_id
+            product_id, product_name, product_description, product_image_url, measurment_unit_id
         FROM 
-            products as P 
-        INNER JOIN 
-            products_details as PD 
-        ON 
-            PD.product_detail_id = P.product_detail_id 
+            users_products
         where 
-            P.product_id = :product_id AND P.user_id = :userId
+            product_id = :product_id AND user_id = :userId
     ');
 
     $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);

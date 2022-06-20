@@ -75,13 +75,13 @@ class AuthController extends AppController {
   }
 
   private function validateRegisterRequest($registerRequest): array {
-    if (empty($loginRequest['email']) || empty($loginRequest['password']) || empty($loginRequest['repeated_password'])) {
+    if (empty($registerRequest['email']) || empty($registerRequest['password']) || empty($registerRequest['repeated_password'])) {
       return  [
         'isValid' => false,
         'messages' => [
-          'email' => empty($loginRequest['email']) ? 'Can\'t be empty' : null,
-          'password' => empty($loginRequest['password']) ? 'Can\'t be empty' : null,
-          'repeated_password' => empty($loginRequest['repeated_password']) ? 'Can\'t be empty' : null,
+          'email' => empty($registerRequest['email']) ? 'Can\'t be empty' : null,
+          'password' => empty($registerRequest['password']) ? 'Can\'t be empty' : null,
+          'repeated_password' => empty($registerRequest['repeated_password']) ? 'Can\'t be empty' : null,
         ],
       ];
     }
